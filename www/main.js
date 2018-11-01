@@ -56,7 +56,7 @@ $(document).ready(function(){
 			if(u && p) {
 				login(u, p);
 			} else {
-				//socket.emit('hello', {});
+				// socket.emit('hello', {});
 				client.rpc('fastsignup', 0, parseSignUpReply);
 			}
 		}, 1000);
@@ -364,8 +364,10 @@ function onDialogOKClicked(e) {
 
 function updateCmds( cmds ){
 	var v, div, btn, words, label, input;
+	var i = 0;
 	for(var k in cmds) {
 		v = cmds[ k ];
+        i++;
 		if(v === null) {
 			$('div#'+k).remove();
 			$('button#'+k).remove();
@@ -413,10 +415,12 @@ function updateCmds( cmds ){
 			$('#cmds').append(div);
 			for(var i=0; i<v.length; i++) {
 				var arg = v[i];
-				var t_arg = (typeof arg === 'string') ? _T(arg) : arg;
-				btn = $('<button>').text(_T(k)+' '+ t_arg).attr('id', k).attr('arg', arg).addClass('cmd');
-				div.append(btn);
-				btn.on('click', onBtnClicked);
+				if(arg == "holdem3") {
+                    var t_arg = (typeof arg === 'string') ? _T(arg) : arg;
+                    btn = $('<button>').text(_T(k) + ' ' + t_arg).attr('id', k).attr('arg', arg).addClass('cmd');
+                    div.append(btn);
+                    btn.on('click', onBtnClicked);
+                }
 			}
 			
 		} else if( typeof v === 'object' ) {
@@ -492,11 +496,12 @@ function login(u, p) {
 	}, function(err,ret){
 		if(err) {
             localStorage.removeItem('x_userid');
-		  localStorage.removeItem('x_passwd');
+		  	localStorage.removeItem('x_passwd');
 			echo(ret);
 			socket.emit('hello', {});
 		} else {
-			$('#messages').empty();
+			// $('#messages').empty();
+            $('#messages').append($('<li>').html("<img src='img/idn.png' width='100%' />"));
 			$('div#cmds').empty();
 			showRoom(null);
 
@@ -505,8 +510,8 @@ function login(u, p) {
 			addMsg(ret.token.uid + ' (' + ret.profile.name + ') ' + _T('login success'));
 			
 			if(ret.cmds) {
-				updateCmds(ret.cmds);
-				
+				// updateCmds(ret.cmds);
+
 				if('entergame' in ret.cmds) {
 					list_games();
 				}
@@ -1274,7 +1279,6 @@ Holdem.view = function(cards) {
 	var rank = Holdem.rank(cards);
 	var pattern = rank >> 20;
 	var str = Poker.visualize(cards).join(',') + ' -> ' + HOLDEM_PATTERNS[ pattern ] + ', rank:' + rank;
-	console.log( str );
 };
 
 
@@ -1375,7 +1379,6 @@ Jinhua.view = function(cards) {
 	var rank = Jinhua.rank(cards);
 	var pattern = rank >> 12;
 	var str = Poker.visualize(cards).join(',') + ' -> ' + JINHUA_PATTERNS[ pattern ] + ', rank:' + rank;
-	console.log( str );
 };
 
 
@@ -1590,12 +1593,10 @@ Poker.merge = function( a, b ) {
 
 Poker.print = function( cards ) {
 	var str = cards.join(',');
-	console.log( str );
 };
 
 Poker.view = function( cards ) {
 	var str = Poker.visualize(cards).join(',');
-	console.log( str );
 };
 
 },{}]},{},[1]);
