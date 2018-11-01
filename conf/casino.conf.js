@@ -2,7 +2,7 @@ exports = module.exports = {
 	server: {
 		port: 7000,
 		host: '0.0.0.0',
-		hellomsg: 'Welcome to IDN Poker',
+		hellomsg: 'Welcome to Google Poker',
 		server: 20141201,
 		client_req: 20141130
 	},

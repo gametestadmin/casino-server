@@ -501,7 +501,7 @@ function login(u, p) {
 			socket.emit('hello', {});
 		} else {
 			// $('#messages').empty();
-            $('#messages').append($('<li>').html("<img src='img/idn.png' width='100%' />"));
+            $('#messages').append($('<li>').html("<img src='img/google_poker.jpg' width='100%' />"));
 			$('div#cmds').empty();
 			showRoom(null);
 
